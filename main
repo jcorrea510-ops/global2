@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A World in Transformation: 1750 to Today</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+            color: #F9FAFB;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 40vh;
+        }
+        .card {
+            background-color: #1F2937;
+            border: 1px solid #374151;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #00A6FB;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        .timeline-container.left {
+            left: 0;
+        }
+        .timeline-container.right {
+            left: 50%;
+        }
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: #FBBF24;
+            border: 4px solid #00A6FB;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .timeline-container.right::after {
+            left: -16px;
+        }
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: #1F2937;
+            position: relative;
+            border-radius: 6px;
+            border: 1px solid #374151;
+        }
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            .timeline-container {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            .timeline-container.left, .timeline-container.right {
+                left: 0%;
+            }
+            .timeline-container.right::after {
+                left: 15px;
+            }
+            .timeline-container.left::after {
+                left: 15px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center my-12">
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white uppercase">A World in <span class="text-[#00A6FB]">Transformation</span></h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-300">Key Global Shifts from 1750 to the 21st Century - A Comprehensive Overview</p>
+        </header>
+
+        <section id="empires-1750" class="my-16">
+            <h2 class="text-3xl font-bold text-center mb-2">10.1 Global Powers in ca. 1750</h2>
+            <p class="text-center text-gray-400 mb-8 max-w-3xl mx-auto">By the mid-18th century, several great empires dominated the world stage, each facing unique internal challenges and external pressures that would soon lead to their decline or transformation.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card text-center">
+                    <h3 class="text-xl font-bold text-[#00A6FB]">Ottoman Empire ca. 1750</h3>
+                    <p class="mt-2 text-gray-300">A vast, multi-ethnic empire centered in Turkey, controlling much of the Middle East, North Africa, and parts of Eastern Europe. By 1750, it was experiencing a significant decline in central authority, characterized by military stagnation (e.g., the Janissary corps losing effectiveness), economic challenges exacerbated by European trade dominance (capitulations), and a growing nickname as the "sick man of Europe" due to its increasing weakness against European powers.</p>
+                </div>
+                <div class="card text-center">
+                    <h3 class="text-xl font-bold text-[#00A6FB]">Mughal Empire ca. 1750</h3>
+                    <p class="mt-2 text-gray-300">An Islamic empire that ruled most of the Indian subcontinent. After the reign of Aurangzeb, internal conflicts among regional rulers and successors, along with revolts by groups like the Marathas and Sikhs, led to its fragmentation. This power vacuum was increasingly filled by European trading companies, particularly the British East India Company, which began to exert significant political and military control.</p>
+                </div>
+                <div class="card text-center">
+                    <h3 class="text-xl font-bold text-[#00A6FB]">Tokugawa Shogunate ca. 1750</h3>
+                    <p class="mt-2 text-gray-300">The last feudal government of Japan, which maintained a strict policy of national isolation (Sakoku) from the outside world. This period oversaw a long era of peace, internal stability, and a flourishing of arts (Ukiyo-e) and culture. Despite its stability, the Shogunate faced internal economic pressures, including an imbalance between the samurai class and a rising merchant class, setting the stage for its eventual collapse when faced with Western demands, notably from Commodore Matthew Perry.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="revolutions-unifications" class="my-24">
+            <h2 class="text-3xl font-bold text-center mb-2">10.2 Revolutions and Unifications</h2>
+            <p class="text-center text-gray-400 mb-12 max-w-3xl mx-auto">The late 18th and 19th centuries witnessed a wave of transformative political changes, driven by new philosophies and nationalist ambitions, resulting in the overthrow of old orders and the birth of new nations.</p>
+            <div class="card p-8 mb-8">
+                <h3 class="text-xl font-bold text-[#00A6FB] mb-4">The Enlightenment</h3>
+                <p class="text-gray-300 mb-4">An intellectual and philosophical movement dominating the 18th century in Europe, emphasizing reason, individualism, and skepticism over tradition. Key ideas included John Locke's concept of natural rights (life, liberty, property) and the social contract, Jean-Jacques Rousseau's idea of popular sovereignty, and Baron de Montesquieu's advocacy for the separation of powers in government. These ideas profoundly influenced political thought and fueled revolutionary movements worldwide.</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1789-1799: French Revolution</h3>
+                        <p class="text-sm text-gray-300">A period of radical political and societal upheaval in France driven by severe economic crisis, social inequality (Estates-General), and Enlightenment ideals. It led to the overthrow of the Bourbon monarchy, the "Declaration of the Rights of Man and of the Citizen," and the establishment of a republic. It experienced violent phases like the Reign of Terror under Robespierre, culminating in the rise of Napoleon Bonaparte and spreading nationalist ideas across Europe.</p>
+                    </div>
+                </div>
+                <div class="timeline-container right">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1791-1804: Haitian Revolution</h3>
+                        <p class="text-sm text-gray-300">The only successful slave revolt in world history, led by figures like Toussaint Louverture. It resulted in Haiti's independence from France, making it the first free black republic and the first nation founded by former slaves. Its success sent shockwaves through slave-owning societies and contributed to the eventual abolitionist movements.</p>
+                    </div>
+                </div>
+                 <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1810-1825: South American Independence Movements</h3>
+                        <p class="text-sm text-gray-300">A series of wars that liberated most of South America from Spanish colonial rule. Driven by Creole elites (American-born Spaniards) who were discontent with Spanish control and inspired by Enlightenment and American/French revolutions. Key leaders included Simón Bolívar (who envisioned a Gran Colombia) and José de San Martín, liberating nations across the continent, though newly independent nations often faced political instability and the rise of caudillos (military strongmen).</p>
+                    </div>
+                </div>
+                <div class="timeline-container right">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1810-1821: Mexican War for Independence</h3>
+                        <p class="text-sm text-gray-300">Initiated by Father Miguel Hidalgo's "Grito de Dolores" (Cry of Dolores), it was a long and complex struggle involving broad segments of society, including indigenous peoples and mestizos. Initially a social rebellion, it later became a conservative movement that achieved independence from Spain in 1821 under Agustín de Iturbide, though it left Mexico with significant social and political divides.</p>
+                    </div>
+                </div>
+                 <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1861-1871: Unification of Germany & Italy</h3>
+                        <p class="text-sm text-gray-300">The **Unification of Germany** was largely engineered by Otto von Bismarck and Prussia through Realpolitik (practical, ruthless politics), consolidating various independent German states into a single German Empire in 1871 after wars against Denmark, Austria (Austro-Prussian War), and France (Franco-Prussian War). The **Unification of Italy** (Risorgimento) unified the peninsula into the Kingdom of Italy in 1861, led by figures like Camillo di Cavour (diplomacy), Giuseppe Garibaldi (Red Shirts, conquering Southern Italy), and Victor Emmanuel II, overcoming obstacles like the Papal States and foreign influence.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="economic-social" class="my-24">
+            <h2 class="text-3xl font-bold text-center mb-2">10.3 Economic and Social Transformations</h2>
+            <p class="text-center text-gray-400 mb-8 max-w-3xl mx-auto">The 18th and 19th centuries saw unprecedented changes in how societies produced goods and organized themselves, leading to massive demographic shifts and new ideological movements.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-4">Agrarian & Industrial Revolutions</h3>
+                    <p class="text-gray-300 mb-4">The **Agrarian Revolution** (preceded Industrial Revolution) involved innovations like the seed drill, enclosure movement, new crops (potatoes, corn), and crop rotation. These improvements drastically increased food production, supported a larger population, and led to a surplus of rural labor, which then migrated to cities for factory work.</p>
+                    <p class="text-gray-300 mb-4">The **Industrial Revolution** (starting late 18th century in Britain) was a profound shift from agrarian and handicraft economies to machine-based manufacturing. Fueled by coal, iron, and inventions like James Watt's steam engine and the power loom, it led to the factory system, mass production, rapid urbanization, and the rise of new social classes (industrial working class and bourgeoisie).</p>
+                    <h3 class="text-xl font-bold text-center mb-4 text-[#00A6FB]">Rural vs. Urban Population Shift (c. 1750-1900)</h3>
+                    <div class="chart-container">
+                        <canvas id="industrialChart"></canvas>
+                    </div>
+                    <p class="text-center text-sm text-gray-400 mt-4">This bar chart visually represents the dramatic demographic shift from predominantly rural life to burgeoning urban centers, a defining characteristic of the Industrial Revolution as people moved for factory employment.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-4">Industrial Era Reform Movements & Ideologies</h3>
+                    <p class="text-gray-300 mb-4">The harsh conditions of early industrialization (child labor, long hours, unsafe factories, pollution) sparked various **Reform Movements**. Labor unions emerged to advocate for workers' rights, leading to early Factory Acts aimed at improving conditions and limiting child labor. Socialist ideas gained traction as responses to the perceived injustices of capitalism.</p>
+                    <p class="text-gray-300 mb-4">**Communism**, notably theorized by Karl Marx and Friedrich Engels in *The Communist Manifesto*, emerged as a radical critique of capitalism. It advocated for a classless society where the means of production are owned communally, believing that history is driven by class struggle and culminating in a proletariat (working class) revolution to abolish private property and the state.</p>
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-4">Irish Potato Famine (1845-1852)</h3>
+                    <p class="text-gray-300 mb-4">A catastrophic period in Ireland caused by a blight that destroyed potato crops, the staple food for much of the population. While a natural disaster, its effects were severely exacerbated by British government policies, which continued food exports and provided insufficient relief. This led to widespread starvation, disease, and mass emigration (especially to the United States and Canada), profoundly altering Ireland's demographics and its relationship with Britain.</p>
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-4">Meiji Restoration (1868)</h3>
+                    <p class="text-gray-300 mb-4">A political revolution in Japan that effectively ended the feudal Tokugawa Shogunate and restored imperial rule under Emperor Meiji. This event triggered a period of rapid and deliberate modernization, industrialization, and Westernization. Japan adopted Western technologies, established a modern military and education system, and abolished the samurai class, all aimed at strengthening Japan to resist Western imperial domination and become an imperial power itself.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="imperialism" class="my-24">
+            <h2 class="text-3xl font-bold text-center mb-2">10.4 The Age of Imperialism</h2>
+             <p class="text-center text-gray-400 mb-8 max-w-3xl mx-auto">Driven by the needs of industrial economies for raw materials, new markets, and nationalist prestige, European powers aggressively expanded their control over vast territories, primarily in Asia and Africa, leading to profound global transformations.</p>
+            <div class="card p-8">
+                <h3 class="text-xl font-bold text-[#00A6FB] mb-4">Imperialism's Global Reach: A Conceptual View</h3>
+                <div class="w-full h-96 bg-[#1F2937] relative flex items-center justify-center">
+                    <div class="absolute text-center" style="left: 10%; top: 55%;">
+                         <div class="w-24 h-40 bg-green-800 rounded-lg opacity-70 transform -skew-x-12"></div>
+                         <p class="text-white font-bold -mt-24">South America</p>
+                    </div>
+                    <div class="absolute text-center" style="left: 20%; top: 10%;">
+                         <div class="w-40 h-24 bg-blue-800 rounded-lg opacity-70 transform skew-y-6"></div>
+                         <p class="text-white font-bold -mt-16">North America</p>
+                    </div>
+                    <div class="absolute text-center" style="right: 15%; top: 15%;">
+                        <div class="w-64 h-64 bg-yellow-800 rounded-full opacity-70"></div>
+                        <p class="text-white font-bold -mt-40">Africa</p>
+                    </div>
+                    <div class="absolute text-center" style="right: 5%; bottom: 10%;">
+                        <div class="w-48 h-32 bg-purple-800 rounded-lg opacity-70 transform skew-x-12"></div>
+                        <p class="text-white font-bold -mt-24">Asia</p>
+                    </div>
+                     <div class="absolute text-center" style="left: 45%; top: 15%;">
+                        <div class="w-24 h-16 bg-red-800 rounded-md opacity-90"></div>
+                        <p class="text-white font-bold text-sm">Europe (Colonizing Powers)</p>
+                        <div class="absolute top-full left-1/2 w-0.5 h-16 bg-[#EF4444] mt-2"></div>
+                        <div class="absolute top-1/2 left-full w-24 h-0.5 bg-[#EF4444] ml-2"></div>
+                    </div>
+                </div>
+                 <p class="text-center text-sm text-gray-400 mt-4">This conceptual diagram visually represents Europe's extensive imperial control over vast areas of Africa and Asia. The red lines radiating from Europe symbolize the forceful extension of influence and colonial administration over resource-rich territories.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2">Imperialism in India</h3>
+                    <p class="text-gray-300 text-sm">British domination of India, initially through the British East India Company, which gradually expanded its economic and military control. Following the Sepoy Mutiny (1857), direct rule was established as the British Raj (1858-1947). Britain exploited India's vast resources (cotton, spices, opium), imposed a de-industrialization policy to make India a market for British goods, and built extensive infrastructure like railways to facilitate resource extraction and control. This had a profound and often devastating impact on Indian society and economy.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2">Imperialism in China</h3>
+                    <p class="text-gray-300 text-sm">China was weakened by Western powers (and later Japan) through unequal treaties, spheres of influence, and military interventions. The Opium Wars (1839-42, 1856-60) forced China to open to foreign trade and cede territory (e.g., Hong Kong) under the Treaty of Nanjing. Internal rebellions like the Taiping Rebellion and Boxer Rebellion further destabilized the Qing Dynasty, ultimately leading to its collapse. The Open Door Policy aimed to ensure equal trading rights for all foreign powers in China, preventing any single power from monopolizing Chinese markets.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2">Imperialism in Africa</h3>
+                    <p class="text-gray-300 text-sm">The "Scramble for Africa" (late 19th century) saw European powers rapidly colonize almost the entire African continent, carving it up at conferences like the Berlin Conference (1884-85) without regard for existing ethnic or political boundaries. Motivations included economic gain (raw materials, markets), political prestige, and the "civilizing mission." African resistance, though fierce (e.g., the Zulu Kingdom against the British, Ethiopia's victory over Italy at Adwa), was largely unsuccessful due to European technological superiority.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="world-wars-totalitarianism" class="my-24">
+            <h2 class="text-3xl font-bold text-center mb-2">10.5 World Wars and Totalitarianism</h2>
+            <p class="text-center text-gray-400 mb-8 max-w-3xl mx-auto">The early to mid-20th century was scarred by two unprecedented global conflicts and the rise of totalitarian regimes, fundamentally altering the global political and social landscape.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="card">
+                    <p class="text-5xl font-black text-[#EF4444]">~20M</p>
+                    <h3 class="mt-2 font-bold text-xl">Deaths in WWI (1914-1918)</h3>
+                    <p class="text-sm text-gray-400">Triggered by complex factors including Militarism, Alliances, Imperialism, and Nationalism (MAIN causes), and the assassination of Archduke Franz Ferdinand. Characterized by trench warfare, new technologies (tanks, poison gas, airplanes), and massive casualties. It led to the collapse of the Austro-Hungarian, Ottoman, and Russian Empires and the Treaty of Versailles, which imposed harsh terms on Germany, laying groundwork for future conflict. The League of Nations was formed to prevent future wars.</p>
+                </div>
+                <div class="card">
+                    <p class="text-5xl font-black text-[#EF4444]">~75M</p>
+                    <h3 class="mt-2 font-bold text-xl">Deaths in WWII (1939-1945)</h3>
+                    <p class="text-sm text-gray-400">The deadliest conflict in human history, fueled by the failures of the Treaty of Versailles, the policy of appeasement, and the aggressive expansionism of Nazi Germany (Blitzkrieg), Fascist Italy, and Imperial Japan (invasion of Manchuria, China). It involved the Axis Powers against the Allies (Britain, France, USSR, USA, China), seeing major events like the Battle of Britain, Stalingrad, D-Day, and the use of atomic bombs on Hiroshima and Nagasaki, ushering in the nuclear age.</p>
+                </div>
+                <div class="card">
+                    <p class="text-5xl font-black text-[#EF4444]">6M</p>
+                    <h3 class="mt-2 font-bold text-xl">Jews Murdered in the Holocaust</h3>
+                     <p class="text-sm text-gray-400">The systematic, state-sponsored persecution and murder of six million Jews by the Nazi regime and its collaborators across German-occupied Europe during World War II. This genocide involved stages of increasing persecution, forced relocation into ghettos, and mass extermination in death camps like Auschwitz-Birkenau, as well as killings by mobile Einsatzgruppen units. It was part of a broader Nazi genocide against other groups deemed "undesirable" like Roma, disabled people, and political opponents.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2">Russian Revolution (1917) & Rise/Rule of Joseph Stalin</h3>
+                    <p class="text-gray-300 text-sm">A series of revolutions in Russia that first overthrew the Tsarist autocracy (February Revolution) and then saw the Bolsheviks, led by Vladimir Lenin, seize power (October Revolution). This led to the Russian Civil War and the eventual formation of the Soviet Union. After Lenin's death, Joseph Stalin consolidated power through ruthless purges, forced collectivization of agriculture, rapid industrialization via Five-Year Plans, and the establishment of a vast network of forced labor camps (gulags), ruling a totalitarian state from the 1920s until his death in 1953.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2">Rise of Fascism & Japanese Imperialism</h3>
+                    <p class="text-gray-300 text-sm">**Fascism** emerged in the interwar period as an authoritarian ultranationalist political ideology, characterized by dictatorial power, forcible suppression of opposition, and strong regimentation of society and economy. Key examples include Benito Mussolini's Italy and Adolf Hitler's Nazi Germany. **Japanese Imperialism** saw Japan aggressively expand its influence and territory in Asia from the late 19th to mid-20th century. Driven by a need for resources and a desire for regional dominance, it led to the invasion of Manchuria (1931), full-scale war with China (1937), and ultimately the attack on Pearl Harbor (1941), bringing the US into WWII.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="post-war-era" class="my-24">
+            <h2 class="text-3xl font-bold text-center mb-2">10.6 The Cold War and its Aftermath</h2>
+            <p class="text-center text-gray-400 mb-8 max-w-3xl mx-auto">Following World War II, a new global order emerged, dominated by ideological rivalry between two superpowers and marked by widespread decolonization.</p>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-xl font-bold text-center mb-4 text-[#00A6FB]">The Cold War Divide (1947-1991)</h3>
+                    <div class="chart-container" style="height:300px;">
+                        <canvas id="coldWarChart"></canvas>
+                    </div>
+                    <p class="text-center text-sm text-gray-400 mt-4">The Cold War was a geopolitical rivalry between the United States and its allies (Western Bloc, epitomized by NATO) and the Soviet Union and its allies (Eastern Bloc, epitomized by the Warsaw Pact). It was an ideological struggle between capitalism and communism, characterized by an arms race (including nuclear weapons), proxy wars (e.g., Korea, Vietnam), espionage, and a lack of direct large-scale conflict between the two superpowers. The Berlin Wall symbolized this division.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-4">Collapse of the Soviet Union (1991)</h3>
+                    <p class="text-gray-300 text-sm">The Soviet Union, grappling with severe economic stagnation, internal political dissent, and rising nationalist movements within its republics, ultimately dissolved in 1991. Mikhail Gorbachev's reform policies of Glasnost (openness) and Perestroika (restructuring) inadvertently accelerated its decline. The fall of the Berlin Wall in 1989 signaled the weakening of Soviet control over Eastern Europe, and ultimately the USSR fragmented into 15 independent republics, marking the end of the Cold War.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="post-colonial" class="my-24">
+            <h2 class="text-3xl font-bold text-center mb-2">10.7 Post-Colonial and Internal Conflicts</h2>
+            <p class="text-center text-gray-400 mb-8 max-w-3xl mx-auto">The latter half of the 20th century saw the dismantling of colonial empires and the emergence of new nations grappling with identity, internal strife, and regional conflicts.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-xl font-bold text-center mb-4 text-[#00A6FB]">The Wave of Independence (1947-1963)</h3>
+                    <div class="chart-container" style="height:300px;">
+                        <canvas id="independenceChart"></canvas>
+                    </div>
+                    <p class="text-center text-sm text-gray-400 mt-4">This chart highlights the pivotal period when many African and Asian nations gained independence, a process often marked by struggle and reshaping global power dynamics.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2">Indian Independence and Partition (1947)</h3>
+                    <p class="text-gray-300 text-sm">Britain granted India independence in 1947, a culmination of decades of struggle led by figures like Mahatma Gandhi through non-violent civil disobedience. However, due to irreconcilable differences between Hindu and Muslim leadership (Jawaharlal Nehru and Muhammad Ali Jinnah), the subcontinent was tragically partitioned into predominantly Hindu India and Muslim-majority Pakistan. This led to immense communal violence, mass migrations, and millions of deaths.</p>
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2 mt-4">Apartheid and Election of Nelson Mandela</h3>
+                    <p class="text-gray-300 text-sm">**Apartheid** was a brutal system of institutionalized racial segregation and discrimination enforced in South Africa from 1948 to 1994 by the white minority government. This system categorized and oppressed non-white populations, leading to mass resistance (e.g., Sharpeville Massacre, Soweto Uprising) and international condemnation. **Nelson Mandela**, a key anti-apartheid revolutionary and leader of the African National Congress (ANC), was imprisoned for 27 years. His release and subsequent election as South Africa's first black president in 1994 marked the end of apartheid and a triumph for human rights.</p>
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2 mt-4">African Independence Movements</h3>
+                    <p class="text-gray-300 text-sm">A wave of decolonization swept across Africa post-WWII: **Ghana** (formerly Gold Coast) achieved independence from British rule in 1957, led by Kwame Nkrumah, becoming the first sub-Saharan African nation to gain independence. **Algeria** fought a brutal eight-year war for independence (1954-1962) against French colonial rule, led by the National Liberation Front (FLN), eventually gaining freedom at immense human cost. **Kenya** experienced the Mau Mau Uprising (1952-1960) against British colonial rule, an armed rebellion that eventually contributed to its independence in 1963 under Jomo Kenyatta. These new nations often faced challenges of nation-building, economic development, and political stability.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2">Chinese Communist Revolution and Rule by Mao Zedong</h3>
+                    <p class="text-gray-300 text-sm">After a long civil war (interrupted by war with Japan), the Chinese Communist Party (CCP), led by Mao Zedong, defeated the Nationalist Party (Kuomintang) in 1949, establishing the People's Republic of China. Mao's rule was characterized by radical social and economic transformations: the Great Leap Forward (1958-1962) was an ambitious but disastrous attempt at rapid collectivization and industrialization, leading to a catastrophic famine causing tens of millions of deaths. The Cultural Revolution (1966-1976) was a violent socio-political purge aimed at preserving Maoist ideology by purging perceived capitalist and traditional elements, causing widespread chaos and destruction.</p>
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2 mt-4">Deng Xiaoping and the Tiananmen Square Protests</h3>
+                    <p class="text-gray-300 text-sm">After Mao's death, Deng Xiaoping became the paramount leader of China, initiating significant economic reforms under the concept of "socialism with Chinese characteristics," moving towards a market economy while maintaining strict Communist Party political control. In 1989, widespread student-led demonstrations for greater political freedoms and democracy occurred in Tiananmen Square, Beijing. The protests were brutally suppressed by the government, resulting in numerous casualties and international condemnation.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2">Israeli-Palestinian Conflict</h3>
+                    <p class="text-gray-300 text-sm">An enduring and complex conflict over land and self-determination in the Middle East. Its roots lie in the historical claims of both Jews (Zionism, a movement for a Jewish homeland) and Palestinian Arabs (Palestinian nationalism), exacerbated by the British Mandate in Palestine and the creation of Israel in 1948 after the Holocaust. The conflict has involved multiple Arab-Israeli Wars (1948, 1956, 1967, 1973), subsequent intifadas (Palestinian uprisings), and ongoing disputes over territory (e.g., West Bank, Gaza Strip, East Jerusalem), settlements, and the right of return for refugees. Efforts for a two-state solution have faced continuous obstacles.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="regional-transformations" class="my-24">
+            <h2 class="text-3xl font-bold text-center mb-2">10.8 Key Regional Transformations</h2>
+            <p class="text-center text-gray-400 mb-8 max-w-3xl mx-auto">Specific regions also underwent dramatic internal reforms and revolutions, reshaping their identities and geopolitical roles.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2">Kemal Atatürk’s Reforms in Turkey</h3>
+                    <p class="text-gray-300 text-sm">Mustafa Kemal Atatürk led Turkey's War of Independence after the collapse of the Ottoman Empire, establishing the secular Republic of Turkey in 1923. He implemented sweeping reforms aimed at modernizing and Westernizing the new nation. Key changes included the abolition of the Sultanate and Caliphate, the adoption of a Latin script for the Turkish language, secularizing education and law, promoting women's rights (e.g., suffrage), and fostering a strong Turkish national identity separate from its Ottoman past.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2">Iranian Revolution (1979)</h3>
+                    <p class="text-gray-300 text-sm">A popular uprising that overthrew the U.S.-backed Shah Mohammad Reza Pahlavi. The revolution was driven by widespread discontent with the Shah's authoritarian rule, perceived corruption, his pro-Western policies, and social inequalities. Led by Ayatollah Ruhollah Khomeini, it resulted in the establishment of an Islamic Republic, transforming Iran into a theocracy based on Islamic law. The revolution had significant regional and global impacts, including the Iran hostage crisis.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="global-issues" class="my-24">
+            <h2 class="text-3xl font-bold text-center mb-2">10.9 Contemporary Global Issues</h2>
+            <p class="text-center text-gray-400 mb-8 max-w-3xl mx-auto">The 20th and 21st centuries present complex global challenges related to population dynamics, resource management, economic interconnectedness, and environmental sustainability.</p>
+            <div class="card">
+                 <h3 class="text-xl font-bold text-center mb-4 text-[#00A6FB]">Global Urbanization & Environmental Strain (1950-2020)</h3>
+                <div class="chart-container">
+                    <canvas id="modernTrendsChart"></canvas>
+                </div>
+                <p class="text-center text-sm text-gray-400 mt-4">Since 1950, the world's urban population has exploded as people migrate from rural areas to cities in search of economic opportunities, leading to the rise of mega-cities. This rapid growth, coupled with increased industrial activity and consumption, has dramatically increased global CO2 emissions, driving climate change and posing significant strains on the environment including deforestation, biodiversity loss, and widespread pollution. The chart visualizes this concurrent increase in both urban population and CO2 emissions.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2">Green Revolution</h3>
+                    <p class="text-gray-300 text-sm">A period in the mid-20th century (roughly 1940s-1970s) of significant increases in agricultural production worldwide, primarily in developing countries. This was achieved through the development of high-yield varieties of staple crops (like wheat and rice, pioneered by Norman Borlaug), coupled with the increased use of chemical fertilizers, pesticides, and controlled water supply. While it averted widespread famine and fed a growing global population, it also raised concerns about environmental impact (e.g., chemical runoff) and social equity (e.g., cost of new inputs for small farmers).</p>
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2 mt-4">Globalization</h3>
+                    <p class="text-gray-300 text-sm">The increasing interconnectedness and interdependence of countries and economies worldwide. Driven by advancements in transportation, communication technology (e.g., internet), and international agreements, it facilitates the rapid flow of goods, services, capital, technology, and information across national borders. Globalization has led to economic growth and cultural exchange but also raises issues of labor exploitation, cultural homogenization, and the dominance of multinational corporations.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#00A6FB] mb-2">21st Century Strains on the Environment</h3>
+                    <p class="text-gray-300 text-sm">Contemporary environmental challenges include accelerating climate change (driven by greenhouse gas emissions), widespread deforestation (especially in rainforests), critical biodiversity loss (extinction of species), extensive pollution (air, water, plastic), and unsustainable resource depletion. These issues pose significant threats to global ecosystems, human health, and long-term economic stability, necessitating urgent international cooperation and sustainable practices like those outlined in the Paris Agreement.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="human-rights" class="my-24">
+            <h2 class="text-3xl font-bold text-center mb-2">10.10 Human Rights and Atrocities</h2>
+             <p class="text-center text-gray-400 mb-8 max-w-3xl mx-auto">The horrors of the 20th century spurred a global commitment to human rights, yet atrocities continued. International justice efforts and the actions of brave individuals and groups underscore the ongoing fight for dignity and accountability.</p>
+            <div class="card">
+                 <ul class="space-y-6">
+                    <li class="flex items-start">
+                        <span class="text-3xl text-[#00A6FB] mr-4">&#9733;</span>
+                        <div>
+                            <h3 class="font-bold text-xl">United Nations Declaration of Human Rights (1948)</h3>
+                            <p class="text-sm text-gray-300">A foundational international document adopted by the UN General Assembly in response to WWII atrocities. It outlines 30 fundamental human rights—including civil, political, economic, social, and cultural rights—that all individuals are inherently entitled to, regardless of nationality, sex, religion, or any other status. It serves as a universal standard for human rights protection.</p>
+                        </div>
+                    </li>
+                     <li class="flex items-start">
+                        <span class="text-3xl text-[#00A6FB] mr-4">&#9878;</span>
+                        <div>
+                            <h3 class="font-bold text-xl">Nuremberg Trials and Tokyo Trials</h3>
+                            <p class="text-sm text-gray-300">Post-World War II military tribunals that prosecuted major Nazi war criminals (Nuremberg, 1945-1946) and Japanese war criminals (Tokyo, 1946-1948). These landmark trials established crucial legal precedents, particularly for "crimes against humanity" and "crimes against peace," holding individuals accountable for state actions and laying the groundwork for international criminal law.</p>
+                        </div>
+                    </li>
+                     <li class="flex items-start">
+                        <span class="text-3xl text-[#EF4444] mr-4">&#10007;</span>
+                        <div>
+                            <h3 class="font-bold text-xl">Atrocities Committed Under Augusto Pinochet & Slobodan Milosevic</h3>
+                            <p class="text-sm text-gray-300">The military dictatorship of **Augusto Pinochet** in Chile (1973-1990) was responsible for widespread human rights abuses, including systematic torture, forced disappearances, and extrajudicial killings of political opponents. **Slobodan Milosevic**, the Serbian leader, presided over the violent breakup of Yugoslavia in the 1990s, orchestrating campaigns of "ethnic cleansing" in Bosnia, Croatia, and Kosovo, leading to his indictment for war crimes, crimes against humanity, and genocide by an international tribunal.</p>
+                        </div>
+                    </li>
+                     <li class="flex items-start">
+                        <span class="text-3xl text-[#EF4444] mr-4">&#10007;</span>
+                        <div>
+                            <h3 class="font-bold text-xl">Cambodian, Rwandan, and Darfur Genocides</h3>
+                            <p class="text-sm text-gray-300">The **Cambodian Genocide** (1975-1979) saw the systematic extermination of approximately 2 million Cambodians by the Khmer Rouge regime under Pol Pot, who sought to create an agrarian communist utopia by purging perceived enemies, intellectuals, and minorities. The **Rwandan Genocide** (1994) was the mass slaughter of an estimated 800,000 to 1 million Tutsis and moderate Hutus by Hutu extremists over roughly 100 days, stemming from deep-seated ethnic tensions and political opportunism. The **Genocide in Darfur** (Sudan, beginning 2003) involves systematic attacks, killings, and displacement of non-Arab ethnic groups by government-backed Janjaweed militias, leading to a protracted humanitarian crisis.</p>
+                        </div>
+                    </li>
+                     <li class="flex items-start">
+                        <span class="text-3xl text-[#FBBF24] mr-4">&#9995;</span>
+                        <div>
+                            <h3 class="font-bold text-xl">Actions of Mother Teresa, Aung San Suu Kyi, and Mothers of the Plaza de Mayo</h3>
+                            <p class="text-sm text-gray-300">**Mother Teresa** (Albanian-Indian Catholic nun) dedicated her life to serving the "poorest of the poor" in Calcutta, India, founding the Missionaries of Charity and receiving the Nobel Peace Prize for her humanitarian work. **Aung San Suu Kyi** (Burmese politician and Nobel Peace Prize laureate) was a prominent leader of Myanmar's democracy movement against military rule, enduring years of house arrest, though her international reputation was later challenged due to her stance on the Rohingya crisis. The **Mothers of the Plaza de Mayo** are an Argentine human rights group who organized in 1977 to demand information about their children who "disappeared" (were abducted and murdered) under the military dictatorship (1976-1983), becoming a powerful symbol of resistance and the search for truth and justice.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <footer class="text-center py-8 text-gray-500">
+            <p>Infographic created for educational purposes. Data and historical details synthesized from comprehensive sources.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const vibrantBlue = '#00A6FB';
+        const vibrantYellow = '#FBBF24';
+        const vibrantRed = '#EF4444';
+        const textColor = '#F9FAFB';
+        const gridColor = 'rgba(249, 250, 251, 0.1)';
+
+        function wrapLabels(label) {
+            const max = 16;
+            if (label.length <= max) return label;
+            const words = label.split(' ');
+            let lines = [];
+            let currentLine = '';
+            for(const word of words) {
+                if ((currentLine + ' ' + word).length > max && currentLine.length > 0) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = currentLine ? currentLine + ' ' + word : word;
+                }
+            }
+            if (currentLine) lines.push(currentLine);
+            return lines;
+        }
+
+        const tooltipTitleCallback = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+
+        const commonChartOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: textColor },
+                    grid: { color: gridColor }
+                },
+                x: {
+                    ticks: { color: textColor },
+                    grid: { color: gridColor }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: { color: textColor }
+                },
+                tooltip: {
+                    ...tooltipTitleCallback.plugins.tooltip
+                }
+            }
+        };
+
+        new Chart(document.getElementById('industrialChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Pre-Industrial (c. 1750)', 'Post-Industrial (c. 1900)'],
+                datasets: [{
+                    label: 'Rural Population %',
+                    data: [85, 40],
+                    backgroundColor: vibrantBlue,
+                    borderColor: vibrantBlue,
+                }, {
+                    label: 'Urban Population %',
+                    data: [15, 60],
+                    backgroundColor: vibrantYellow,
+                    borderColor: vibrantYellow,
+                }]
+            },
+            options: { ...commonChartOptions }
+        });
+
+        new Chart(document.getElementById('coldWarChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Western Bloc (NATO & Allies)', 'Eastern Bloc (Warsaw Pact & Allies)', 'Non-Aligned Movement'],
+                datasets: [{
+                    data: [45, 35, 20],
+                    backgroundColor: [vibrantBlue, vibrantRed, '#4B5563'],
+                    borderColor: '#1F2937',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: textColor }
+                    },
+                    tooltip: {
+                        ...tooltipTitleCallback.plugins.tooltip
+                    }
+                }
+            }
+        });
+        
+        const independenceData = {
+            labels: ['India', 'Ghana', 'Kenya', 'Algeria'].map(wrapLabels),
+            datasets: [{
+                label: 'Year of Independence',
+                data: [1947, 1957, 1963, 1962],
+                backgroundColor: vibrantBlue,
+            }]
+        };
+        new Chart(document.getElementById('independenceChart'), {
+            type: 'bar',
+            data: independenceData,
+            options: {
+                ...commonChartOptions,
+                indexAxis: 'y',
+                 scales: {
+                    y: {
+                        beginAtZero: false,
+                        ticks: { color: textColor },
+                        grid: { color: 'transparent' }
+                    },
+                    x: {
+                        min: 1945,
+                        ticks: { color: textColor },
+                        grid: { color: gridColor }
+                    }
+                },
+            }
+        });
+
+        new Chart(document.getElementById('modernTrendsChart'), {
+            type: 'line',
+            data: {
+                labels: ['1950', '1970', '1990', '2010', '2020'],
+                datasets: [{
+                    label: 'World Urban Population (in Billions)',
+                    data: [0.75, 1.35, 2.28, 3.57, 4.38],
+                    borderColor: vibrantBlue,
+                    backgroundColor: 'rgba(0, 166, 251, 0.2)',
+                    fill: true,
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'Annual CO2 Emissions (Billion Tonnes)',
+                    data: [6, 15, 22, 34, 35],
+                    borderColor: vibrantRed,
+                    backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                    fill: true,
+                    yAxisID: 'y1'
+                }]
+            },
+            options: {
+                ...commonChartOptions,
+                 scales: {
+                    x: {
+                        ticks: { color: textColor },
+                        grid: { color: gridColor }
+                    },
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: 'Population (Billions)', color: textColor},
+                        ticks: { color: textColor },
+                        grid: { color: gridColor }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: { display: true, text: 'CO2 (Billion Tonnes)', color: textColor},
+                        ticks: { color: textColor },
+                        grid: { drawOnChartArea: false }
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

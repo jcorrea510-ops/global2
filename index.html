@@ -79,7 +79,116 @@
             position: relative;
             border-radius: 6px;
             border: 1px solid #374151;
+            overflow: hidden;
         }
+        .timeline-content .span-indicator-bar {
+            position: absolute;
+            width: 10px; /* Thicker */
+            top: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, #EF4444, #FBBF24); /* Red to Yellow gradient for vibrancy */
+            opacity: 0.9; /* More prominent */
+            z-index: 0; /* Behind content text */
+        }
+        .timeline-container.left .timeline-content .span-indicator-bar {
+            left: 0;
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
+        }
+        .timeline-container.right .timeline-content .span-indicator-bar {
+            right: 0;
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+        .timeline-detail-content {
+            background-color: #111827;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            position: absolute;
+            left: 105%;
+            top: 0;
+            width: 250px;
+            z-index: 20;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(20px);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .timeline-container.right .timeline-detail-content {
+            left: auto;
+            right: 105%;
+            transform: translateX(-20px);
+        }
+        .timeline-container.group:hover .timeline-detail-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+        .timeline-content h3, .timeline-content p {
+            position: relative; /* Ensure text is above span-indicator-bar */
+            z-index: 1;
+        }
+
+        /* Styles for the new "End of Event" marker */
+        .timeline-event-end {
+            position: relative;
+            width: 50%;
+            padding: 15px 40px; /* Adjust padding for visual separation */
+            box-sizing: border-box;
+            z-index: 5;
+            text-align: center; /* Center text by default */
+            margin-top: 10px; /* Space between event card and end marker */
+            margin-bottom: 10px; /* Space between end marker and next event */
+        }
+
+        .timeline-event-end.left {
+            left: 0;
+            text-align: right; /* Text aligns to the right for left containers */
+        }
+        .timeline-event-end.right {
+            left: 50%;
+            text-align: left; /* Text aligns to the left for right containers */
+        }
+
+        .timeline-event-end .timeline-end-point {
+            position: absolute;
+            width: 18px; /* Size of the dot */
+            height: 18px;
+            background-color: #FBBF24; /* Match timeline dots */
+            border: 4px solid #00A6FB; /* Match timeline dots */
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2; /* On top of the main timeline line */
+        }
+
+        .timeline-event-end.left .timeline-end-point {
+            right: -9px; /* Adjust to sit on the central line */
+        }
+        .timeline-event-end.right .timeline-end-point {
+            left: -9px; /* Adjust to sit on the central line */
+        }
+
+        .timeline-event-end .timeline-end-text {
+            font-size: 0.75rem; /* text-xs */
+            color: #9CA3AF; /* gray-400 */
+            background-color: #1F2937; /* Match card background for a subtle box */
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block; /* Allow padding and background */
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .timeline-event-end.left .timeline-end-text {
+            margin-right: 20px; /* Space from point */
+        }
+        .timeline-event-end.right .timeline-end-text {
+            margin-left: 20px; /* Space from point */
+        }
+
+
         @media screen and (max-width: 768px) {
             .timeline::after {
                 left: 31px;
@@ -98,6 +207,44 @@
             .timeline-container.left::after {
                 left: 15px;
             }
+            .timeline-detail-content {
+                position: relative;
+                left: 0;
+                right: 0;
+                width: auto;
+                transform: translateX(0);
+                margin-top: 10px;
+                opacity: 1;
+                visibility: visible;
+                display: none;
+            }
+             .timeline-container.group:hover .timeline-detail-content {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(0);
+                display: block;
+            }
+            .timeline-content .span-indicator-bar {
+                width: 8px; /* Slightly thinner on mobile */
+            }
+
+            /* Mobile adjustments for end markers */
+            .timeline-event-end {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+                text-align: left; /* Always left align text on mobile */
+            }
+            .timeline-event-end.left .timeline-end-point,
+            .timeline-event-end.right .timeline-end-point {
+                left: 23px; /* Align with mobile timeline line */
+                right: auto;
+            }
+            .timeline-event-end.left .timeline-end-text,
+            .timeline-event-end.right .timeline-end-text {
+                margin-right: 0;
+                margin-left: 20px; /* Consistent spacing from mobile point */
+            }
         }
     </style>
 </head>
@@ -108,6 +255,7 @@
         <header class="text-center my-12">
             <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white uppercase">A World in <span class="text-[#00A6FB]">Transformation</span></h1>
             <p class="mt-4 text-lg md:text-xl text-gray-300">Key Global Shifts from 1750 to the 21st Century - A Comprehensive Overview</p>
+            <a href="#detailed-timeline" class="mt-8 inline-block px-6 py-3 bg-[#00A6FB] text-white font-bold rounded-full shadow-lg hover:bg-blue-600 transition duration-300">Explore The Full Timeline</a>
         </header>
 
         <section id="empires-1750" class="my-16">
@@ -403,10 +551,683 @@
                         <span class="text-3xl text-[#FBBF24] mr-4">&#9995;</span>
                         <div>
                             <h3 class="font-bold text-xl">Actions of Mother Teresa, Aung San Suu Kyi, and Mothers of the Plaza de Mayo</h3>
-                            <p class="text-sm text-gray-300">**Mother Teresa** (Albanian-Indian Catholic nun) dedicated her life to serving the "poorest of the poor" in Calcutta, India, founding the Missionaries of Charity and receiving the Nobel Peace Prize for her humanitarian work. **Aung San Suu Kyi** (Burmese politician and Nobel Peace Prize laureate) was a prominent leader of Myanmar's democracy movement against military rule, enduring years of house arrest, though her international reputation was later challenged due to her stance on the Rohingya crisis. The **Mothers of the Plaza de Mayo** are an Argentine human rights group who organized in 1977 to demand information about their children who "disappeared" (were abducted and murdered) under the military dictatorship (1976-1983), becoming a powerful symbol of resistance and the search for truth and justice.</p>
+                            <p class="text-sm text-gray-300">**Mother Teresa** (Albanian-Indian Catholic nun) dedicated her life to serving the "poorest of the poor" in Calcutta, India, founding the Missionaries of Charity and receiving the Nobel Peace Prize for her humanitarian work. **Aung San Suu Kyi** (Burmese politician and Nobel Peace Prize laureate) was a prominent leader of Myanmar's democracy movement against military rule, enduring years of house arrest, though her reputation was later tarnished by her stance on the Rohingya crisis. The **Mothers of the Plaza de Mayo** are an Argentine human rights group who organized in 1977 to demand information about their children who "disappeared" (were abducted and murdered) under the military dictatorship (1976-1983), becoming a powerful symbol of resistance and the search for truth and justice.</p>
                         </div>
                     </li>
                 </ul>
+            </div>
+        </section>
+
+        <!-- New Detailed Timeline Section -->
+        <section id="detailed-timeline" class="my-24">
+            <h2 class="text-3xl font-bold text-center mb-2">The Complete Global 2 Timeline (c. 1750 - Present)</h2>
+            <p class="text-center text-gray-400 mb-12 max-w-3xl mx-auto">Explore every key event and transformation that shaped the modern world. Hover over each entry for detailed information.</p>
+
+            <div class="timeline">
+                <!-- 10.1 Global Powers in ca. 1750 -->
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">c. 1750: Ottoman Empire Decline</h3>
+                        <p class="text-sm text-gray-300">"Sick Man of Europe" begins decline.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A vast, multi-ethnic empire centered in Turkey, controlling much of the Middle East, North Africa, and parts of Eastern Europe. By 1750, it was experiencing a significant decline in central authority, characterized by military stagnation (e.g., the Janissary corps losing effectiveness), economic challenges exacerbated by European trade dominance (capitulations), and a growing nickname as the "sick man of Europe" due to its increasing weakness against European powers. This decline continued for several decades until its dissolution after WWI.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Ottoman Empire Decline (c. 1922)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">c. 1750: Mughal Empire Fragmentation</h3>
+                        <p class="text-sm text-gray-300">Internal conflicts and European influence.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            An Islamic empire that ruled most of the Indian subcontinent. After the reign of Aurangzeb, internal conflicts among regional rulers and successors, along with revolts by groups like the Marathas and Sikhs, led to its fragmentation. This power vacuum was increasingly filled by European trading companies, particularly the British East India Company, which began to exert significant political and military control. This period of fragmentation continued leading to its eventual end with the rise of British colonial rule.
+                        </div>
+                    </div>
+                </div>
+                 <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Mughal Empire Fragmentation (c. 1857)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">c. 1750-1868: Tokugawa Shogunate in Japan</h3>
+                        <p class="text-sm text-gray-300">Strict isolation and internal stability.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The last feudal government of Japan, which maintained a strict policy of national isolation (Sakoku) from the outside world. This period oversaw a long era of peace, internal stability, and a flourishing of arts (Ukiyo-e) and culture. Despite its stability, the Shogunate faced internal economic pressures, including an imbalance between the samurai class and a rising merchant class, setting the stage for its eventual collapse when faced with Western demands, notably from Commodore Matthew Perry. This era ended with the Meiji Restoration in 1868.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Tokugawa Shogunate (1868)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">18th Century: The Enlightenment</h3>
+                        <p class="text-sm text-gray-300">Reason, individualism, natural rights.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            An intellectual and philosophical movement dominating the 18th century in Europe, emphasizing reason, individualism, and skepticism over tradition. Key ideas included John Locke's concept of natural rights (life, liberty, property) and the social contract, Jean-Jacques Rousseau's idea of popular sovereignty, and Baron de Montesquieu's advocacy for the separation of powers in government. These ideas profoundly influenced political thought and fueled revolutionary movements worldwide throughout the 18th century.
+                        </div>
+                    </div>
+                </div>
+                 <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Enlightenment Era (c. 1800)</p>
+                </div>
+
+                <!-- 10.2 Revolutions and Unifications -->
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1789-1799: French Revolution</h3>
+                        <p class="text-sm text-gray-300">Overthrow of monarchy, birth of a republic.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A period of radical political and societal upheaval in France driven by severe economic crisis, social inequality (Estates-General), and Enlightenment ideals. It led to the overthrow of the Bourbon monarchy, the "Declaration of the Rights of Man and of the Citizen," and the establishment of a republic. It experienced violent phases like the Reign of Terror under Robespierre, culminating in the rise of Napoleon Bonaparte and spreading nationalist ideas across Europe.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of French Revolution (1799)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1791-1804: Haitian Revolution</h3>
+                        <p class="text-sm text-gray-300">Successful slave revolt, first free black republic.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The only successful slave revolt in world history, led by figures like Toussaint Louverture. It resulted in Haiti's independence from France, making it the first free black republic and the first nation founded by former slaves. Its success sent shockwaves through slave-owning societies and contributed to the eventual abolitionist movements.
+                        </div>
+                    </div>
+                </div>
+                 <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Haitian Revolution (1804)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">1810-1825: South American Independence Movements</h3>
+                        <p class="text-sm text-gray-300">Liberation from Spanish colonial rule.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A series of wars that liberated most of South America from Spanish colonial rule. Driven by Creole elites (American-born Spaniards) who were discontent with Spanish control and inspired by Enlightenment and American/French revolutions. Key leaders included Simón Bolívar (who envisioned a Gran Colombia) and José de San Martín, liberating nations across the continent, though newly independent nations often faced political instability and the rise of caudillos (military strongmen). This period of independence movements spanned several years across the continent.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of South American Independence (1825)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1810-1821: Mexican War for Independence</h3>
+                        <p class="text-sm text-gray-300">From social rebellion to conservative independence.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            Initiated by Father Miguel Hidalgo's "Grito de Dolores" (Cry of Dolores), it was a long and complex struggle involving broad segments of society, including indigenous peoples and mestizos. Initially a social rebellion, it later became a conservative movement that achieved independence from Spain in 1821 under Agustín de Iturbide, though it left Mexico with significant social and political divides.
+                        </div>
+                    </div>
+                </div>
+                 <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Mexican War for Independence (1821)</p>
+                </div>
+
+                <!-- 10.3 Economic and Social Transformations -->
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">18th-19th C.: Agrarian Revolution</h3>
+                        <p class="text-sm text-gray-300">Agricultural innovation and population growth.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The **Agrarian Revolution** (preceded Industrial Revolution) involved innovations like the seed drill, enclosure movement, new crops (potatoes, corn), and crop rotation. These improvements drastically increased food production, supported a larger population, and led to a surplus of rural labor, which then migrated to cities for factory work. This transformation spanned decades.
+                        </div>
+                    </div>
+                </div>
+                 <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Major Agrarian Revolution Shifts (c. 1900)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">Late 18th C. Onward: Industrial Revolution</h3>
+                        <p class="text-sm text-gray-300">Machine-based manufacturing, urbanization.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The **Industrial Revolution** (starting late 18th century in Britain) was a profound shift from agrarian and handicraft economies to machine-based manufacturing. Fueled by coal, iron, and inventions like James Watt's steam engine and the power loom, it led to the factory system, mass production, rapid urbanization, and the rise of new social classes (industrial working class and bourgeoisie). This revolution continued into the 19th and 20th centuries.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of First Industrial Revolution (c. 1840)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">19th C.: Industrial Era Reform Movements</h3>
+                        <p class="text-sm text-gray-300">Response to industrialization's social problems.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The harsh conditions of early industrialization (child labor, long hours, unsafe factories, pollution) sparked various **Reform Movements**. Labor unions emerged to advocate for workers' rights, leading to early Factory Acts aimed at improving conditions and limiting child labor. Socialist ideas gained traction as responses to the perceived injustices of capitalism. These movements developed throughout the 19th century.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">Peak/End of Major 19th C. Reform Wave (c. 1900)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">Mid-19th C.: Rise of Communism</h3>
+                        <p class="text-sm text-gray-300">Marxist theory of classless society.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            **Communism**, notably theorized by Karl Marx and Friedrich Engels in *The Communist Manifesto*, emerged as a radical critique of capitalism. It advocated for a classless society where the means of production are owned communally, believing that history is driven by class struggle and culminating in a proletariat (working class) revolution to abolish private property and the state. This ideology developed and gained influence throughout the mid-19th century and beyond.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">Initial Rise of Communism (c. 1860s)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">1845-1852: Irish Potato Famine</h3>
+                        <p class="text-sm text-gray-300">Catastrophic blight and British policies.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A catastrophic period in Ireland caused by a blight that destroyed potato crops, the staple food for much of the population. While a natural disaster, its effects were severely exacerbated by British government policies, which continued food exports and provided insufficient relief. This led to widespread starvation, disease, and mass emigration (especially to the United States and Canada), profoundly altering Ireland's demographics and its relationship with Britain. The famine ended in 1852, leaving a lasting impact.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Irish Potato Famine (1852)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1861-1871: Unification of Germany & Italy</h3>
+                        <p class="text-sm text-gray-300">Formation of modern nation-states.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The **Unification of Germany** was largely engineered by Otto von Bismarck and Prussia through Realpolitik (practical, ruthless politics), consolidating various independent German states into a single German Empire in 1871 after wars against Denmark, Austria (Austro-Prussian War), and France (Franco-Prussian War). The **Unification of Italy** (Risorgimento) unified the peninsula into the Kingdom of Italy in 1861, led by figures like Camillo di Cavour (diplomacy), Giuseppe Garibaldi (Red Shirts, conquering Southern Italy), and Victor Emmanuel II, overcoming obstacles like the Papal States and foreign influence. This process spanned roughly a decade, culminating in the complete unification of both nations.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">Unification of Germany & Italy Completed (1871)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1868: Meiji Restoration in Japan</h3>
+                        <p class="text-sm text-gray-300">End of shogunate, rapid modernization.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A political revolution in Japan that effectively ended the feudal Tokugawa Shogunate and restored imperial rule under Emperor Meiji. This event triggered a period of rapid and deliberate modernization, industrialization, and Westernization. Japan adopted Western technologies, established a modern military and education system, and abolished the samurai class, all aimed at strengthening Japan to resist Western imperial domination and become an imperial power itself.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">Meiji Restoration Begins (1868)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">Late 19th C.: Imperialism in Africa</h3>
+                        <p class="text-sm text-gray-300">"Scramble for Africa" & colonization.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The "Scramble for Africa" (late 19th century) saw European powers rapidly colonize almost the entire African continent, carving it up at conferences like the Berlin Conference (1884-85) without regard for existing ethnic or political boundaries. Motivations included economic gain (raw materials, markets), political prestige, and the "civilizing mission." African resistance, though fierce (e.g., the Zulu Kingdom against the British, Ethiopia's victory over Italy at Adwa), was largely unsuccessful due to European technological superiority. This rapid colonization occurred primarily in the late 19th century.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Scramble for Africa (c. 1914)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">Late 19th-Mid 20th C.: Japanese Imperialism</h3>
+                        <p class="text-sm text-gray-300">Aggressive expansion in Asia.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            Japan's aggressive expansionist policy in Asia (late 19th-mid 20th century), driven by resource needs and nationalist ambitions, leading to invasions of Korea, Manchuria (1931), and significant parts of China (1937), and ultimately the attack on Pearl Harbor (1941), bringing the US into WWII. This period of expansion spanned several decades.
+                        </div>
+                    </div>
+                </div>
+                 <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Japanese Imperialism (1945)</p>
+                </div>
+
+                <!-- 10.5 World Wars and Totalitarianism -->
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1914-1918: World War I</h3>
+                        <p class="text-sm text-gray-300">Global conflict, trench warfare, new tech.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            Triggered by complex factors including Militarism, Alliances, Imperialism, and Nationalism (MAIN causes), and the assassination of Archduke Franz Ferdinand. Characterized by trench warfare, new technologies (tanks, poison gas, airplanes), and massive casualties. It led to the collapse of the Austro-Hungarian, Ottoman, and Russian Empires and the Treaty of Versailles, which imposed harsh terms on Germany, laying groundwork for future conflict. The League of Nations was formed to prevent future wars. This global conflict concluded in 1918.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of World War I (1918)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1917: Russian Revolution</h3>
+                        <p class="text-sm text-gray-300">Overthrow of Tsarist rule, rise of Bolsheviks.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A series of revolutions in Russia that first overthrew the Tsarist autocracy (February Revolution) and then saw the Bolsheviks, led by Vladimir Lenin, seize power (October Revolution). This led to the Russian Civil War and the eventual formation of the Soviet Union.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">Russian Revolution's Main Phase (1917)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">1920s-1953: Rise and Rule of Joseph Stalin</h3>
+                        <p class="text-sm text-gray-300">Totalitarian regime, purges, collectivization.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            After Lenin's death, Joseph Stalin consolidated power in the Soviet Union through ruthless purges, forced collectivization of agriculture, rapid industrialization via Five-Year Plans, and the establishment of a vast network of forced labor camps (gulags), ruling a totalitarian state from the 1920s until his death in 1953. This period of rule spanned several decades, ending with his death.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Stalin's Rule (1953)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">1920s-1930s: Kemal Atatürk’s Reforms in Turkey</h3>
+                        <p class="text-sm text-gray-300">Modernization and Westernization of Turkey.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            Mustafa Kemal Atatürk led Turkey's war of independence after WWI and established the Republic of Turkey (1923), implementing radical secular, nationalist, and Westernizing reforms. Key changes included abolition of Sultanate/Caliphate, adoption of Latin script, secularizing education/law, and promoting women's rights. These reforms were primarily enacted throughout the 1920s and 1930s, laying the foundation for modern Turkey.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">Major Atatürk Reforms Concluded (c. 1938)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">Interwar Period: Rise of Fascism</h3>
+                        <p class="text-sm text-gray-300">Authoritarian ultranationalist ideology.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            An authoritarian ultranationalist political ideology (emerging after WWI in Italy under Mussolini and Germany under Hitler) characterized by dictatorial power, forcible suppression of opposition, and strong regimentation of society and economy. This rise occurred throughout the period between the two World Wars, leading to significant global instability.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">Fascism Ascendance Ends (1945)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1939-1945: World War II</h3>
+                        <p class="text-sm text-gray-300">Deadliest global conflict, Axis vs Allies.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A global conflict (1939-1945) triggered by Nazi Germany's aggression, involving the Axis Powers (Germany, Italy, Japan) against the Allies (Britain, USSR, US, China), resulting in unprecedented destruction, the Holocaust, and the use of atomic bombs on Hiroshima and Nagasaki. This devastating conflict concluded in 1945.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of World War II (1945)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1941-1945: The Holocaust</h3>
+                        <p class="text-sm text-gray-300">Systematic genocide of Jews.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The systematic, state-sponsored persecution and murder of six million Jews by the Nazi regime and its collaborators across German-occupied Europe during World War II. This genocide involved stages of increasing persecution, forced relocation into ghettos, and mass extermination in death camps like Auschwitz-Birkenau, as well as killings by mobile Einsatzgruppen units. It was part of a broader Nazi genocide against other groups deemed "undesirable" like Roma, disabled people, and political opponents. The Holocaust concluded with the end of WWII in 1945.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of The Holocaust (1945)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">Post-WWII: Nuremberg & Tokyo Trials</h3>
+                        <p class="text-sm text-gray-300">Prosecution of war criminals.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            Post-WWII military tribunals that prosecuted major Nazi war criminals (Nuremberg, 1945-1946) and Japanese war criminals (Tokyo, 1946-1948) for crimes against peace, war crimes, and crimes against humanity. These landmark trials established crucial legal precedents for international criminal law. The trials took place in the immediate aftermath of WWII, concluding by 1948.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Major War Crime Trials (1948)</p>
+                </div>
+
+                <!-- 10.6 Cold War -->
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">1947-1991: The Cold War</h3>
+                        <p class="text-sm text-gray-300">US vs USSR ideological rivalry.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A geopolitical rivalry (1947-1991) between the United States and its allies (Western Bloc) and the Soviet Union and its allies (Eastern Bloc), characterized by an ideological struggle, arms race, proxy wars, and no direct large-scale conflict between the two superpowers. The Berlin Wall symbolized this division. This intense period of global tension spanned over four decades, concluding with the collapse of the Soviet Union.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of The Cold War (1991)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1947: Indian Independence & Partition</h3>
+                        <p class="text-sm text-gray-300">Freedom from Britain, division of subcontinent.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            Britain granted India independence in 1947, a culmination of decades of struggle led by figures like Mahatma Gandhi through non-violent civil disobedience. However, due to irreconcilable differences between Hindu and Muslim leadership (Jawaharlal Nehru and Muhammad Ali Jinnah), the subcontinent was tragically partitioned into predominantly Hindu India and Muslim-majority Pakistan. This led to immense communal violence, mass migrations, and millions of deaths. This significant event occurred in 1947.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">Indian Independence Granted (1947)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1948: UN Declaration of Human Rights</h3>
+                        <p class="text-sm text-gray-300">Foundational document for universal rights.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A foundational international document (1948) adopted by the UN General Assembly outlining 30 fundamental human rights that all individuals are entitled to, regardless of nationality, sex, national or ethnic origin, color, religion, language, or any other status. It serves as a universal standard for human rights protection.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">UN Declaration Adopted (1948)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">1948-1994: Apartheid in South Africa</h3>
+                        <p class="text-sm text-gray-300">Racial segregation; Nelson Mandela's fight.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            **Apartheid** was a brutal system of institutionalized racial segregation and discrimination enforced in South Africa (1948-1994) by the white minority government. This system categorized and oppressed non-white populations, leading to mass resistance (e.g., Sharpeville Massacre, Soweto Uprising) and international condemnation. **Nelson Mandela**, a key anti-apartheid revolutionary and leader of the African National Congress (ANC), was imprisoned for 27 years. His release and subsequent election as South Africa's first black president in 1994 marked the end of apartheid and a triumph for human rights. This oppressive system lasted for decades, finally ending in 1994.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Apartheid (1994)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">1949-1976: Chinese Communist Revolution & Mao's Rule</h3>
+                        <p class="text-sm text-gray-300">Establishment of PRC, radical campaigns.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The Chinese Communist Party, led by Mao Zedong, defeated the Nationalist Party in 1949, establishing the People's Republic of China. Mao's rule was characterized by radical social and economic transformations: the Great Leap Forward (1958-1962) was an ambitious but disastrous attempt at rapid collectivization and industrialization, leading to a catastrophic famine causing tens of millions of deaths. The Cultural Revolution (1966-1976) was a violent socio-political purge aimed at preserving Maoist ideology by purging perceived capitalist and traditional elements, causing widespread chaos and destruction. His rule spanned from 1949 until his death in 1976.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Mao's Rule (1976)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">1950 Onward: Global Urbanization & Environment</h3>
+                        <p class="text-sm text-gray-300">Global shift to cities, ecological stress.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            **20th and 21st Century Urbanization:** A rapid global trend of population shift from rural areas to cities, driven by industrialization, economic opportunities, and technological advancements, leading to mega-cities and associated social/environmental challenges. The increase in urban population directly correlates with **21st Century Strains on the Environment** including climate change (from CO2 emissions), deforestation, biodiversity loss, pollution, and resource depletion, posing significant threats. These trends span the late 20th and all of the 21st century and are ongoing.
+                        </div>
+                    </div>
+                </div>
+                <!-- No end marker for Ongoing -->
+
+                 <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">Mid-20th C.: Green Revolution</h3>
+                        <p class="text-sm text-gray-300">Increased agricultural production.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A period (roughly 1940s-1970s) of significant increases in agricultural production worldwide, primarily in developing countries. This was achieved through the development of high-yield varieties of staple crops (like wheat and rice, pioneered by Norman Borlaug), coupled with the increased use of chemical fertilizers, pesticides, and controlled water supply. While it averted widespread famine, it also raised concerns about environmental impact (e.g., chemical runoff) and social equity (e.g., cost of new inputs for small farmers). This period of agricultural advancement spanned several decades.
+                        </div>
+                    </div>
+                </div>
+                 <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Main Green Revolution Period (c. 1970s)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">Mid-20th C.: African Independence Movements</h3>
+                        <p class="text-sm text-gray-300">Decolonization wave across Africa.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A wave of decolonization swept across Africa post-WWII: **Ghana** (1957, Kwame Nkrumah) became the first sub-Saharan African nation to gain independence. **Algeria** fought a brutal war for independence (1954-1962) against French colonial rule. **Kenya** experienced the Mau Mau Uprising (1952-1960) against British colonial rule, leading to independence in 1963 under Jomo Kenyatta. These movements occurred across the mid-20th century.
+                        </div>
+                    </div>
+                </div>
+                 <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">Peak of African Independence (c. 1963)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">1973-1990: Atrocities Under Augusto Pinochet</h3>
+                        <p class="text-sm text-gray-300">Human rights abuses in Chile.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The military dictatorship of Augusto Pinochet in Chile (1973-1990) was responsible for widespread human rights abuses, including systematic torture, forced disappearances, and political killings of opponents. His rule and the atrocities spanned this period, ending with the transition to democracy in 1990.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Pinochet's Dictatorship (1990)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1975-1979: Cambodian Genocide</h3>
+                        <p class="text-sm text-gray-300">Khmer Rouge extermination under Pol Pot.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The systematic extermination of approximately 2 million Cambodians (1975-1979) by the Khmer Rouge regime under Pol Pot, who sought to create an agrarian communist society by purging perceived enemies, intellectuals, and minorities. The genocide ended in 1979 with the Vietnamese invasion.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Cambodian Genocide (1979)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">1977 Onward: Mothers of the Plaza de Mayo</h3>
+                        <p class="text-sm text-gray-300">Argentine human rights activism.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A group of Argentine mothers who organized in 1977 to demand information about their children who "disappeared" (were abducted and murdered) under the military dictatorship (1976-1983), becoming a powerful symbol of human rights activism. Their activism continues to some extent to this day, seeking justice and truth.
+                        </div>
+                    </div>
+                </div>
+                <!-- No end marker for Ongoing -->
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">1978 Onward: Deng Xiaoping Reforms & 1989 Tiananmen</h3>
+                        <p class="text-sm text-gray-300">Economic opening, democracy protests.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            Deng Xiaoping led China after Mao, initiating significant economic reforms under the concept of "socialism with Chinese characteristics," moving towards a market economy while maintaining strict Communist Party political control. In 1989, widespread student-led demonstrations for greater political freedoms and democracy occurred in Tiananmen Square, Beijing. The protests were brutally suppressed by the government, resulting in numerous casualties and international condemnation. Deng's reforms continued well into the 1990s, changing China's economic landscape.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">Deng's Reforms Fully Established (c. 1990s)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1979: Iranian Revolution</h3>
+                        <p class="text-sm text-gray-300">Overthrow of Shah, establishment of Islamic Republic.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A popular uprising (1979) that overthrew the U.S.-backed Shah Mohammad Reza Pahlavi. The revolution was driven by widespread discontent with the Shah's authoritarian rule, perceived corruption, his pro-Western policies, and social inequalities. Led by Ayatollah Ruhollah Khomeini, it resulted in the establishment of an Islamic Republic, transforming Iran into a theocracy based on Islamic law. The revolution had significant regional and global impacts.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">Iranian Revolution Completed (1979)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">1990s: Atrocities Under Slobodan Milosevic</h3>
+                        <p class="text-sm text-gray-300">War crimes in Yugoslav Wars.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The Serbian leader Slobodan Milosevic was accused of war crimes, crimes against humanity, and genocide during the Yugoslav Wars of the 1990s, particularly in Bosnia, Croatia, and Kosovo. His actions spanned this decade of conflict in the Balkans.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Milosevic's Atrocities (c. 2000)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1991: Collapse of the Soviet Union</h3>
+                        <p class="text-sm text-gray-300">Economic stagnation, nationalist movements.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The dissolution of the USSR (1991) into 15 independent republics, driven by economic stagnation, political reforms (Glasnost, Perestroika), nationalist movements, and the weakening of Communist Party control. The fall of the Berlin Wall in 1989 signaled the weakening of Soviet control over Eastern Europe, and ultimately the USSR fragmented into 15 independent republics, marking the end of the Cold War.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">Soviet Union Dissolved (1991)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-[#FBBF24]">1994: Rwandan Genocide</h3>
+                        <p class="text-sm text-gray-300">Mass slaughter of Tutsis and moderate Hutus.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The mass slaughter of an estimated 800,000 to 1 million Tutsis and moderate Hutus in Rwanda (1994) by Hutu extremists over approximately 100 days, stemming from ethnic tensions. This horrific event occurred in 1994.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end right">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">End of Rwandan Genocide (1994)</p>
+                </div>
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">Late 20th-Early 21st C.: Aung San Suu Kyi</h3>
+                        <p class="text-sm text-gray-300">Democracy leader in Myanmar.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A Burmese politician and Nobel Peace Prize laureate who was a prominent leader of the democracy movement in Myanmar (Burma) against military rule, spending many years under house arrest, though her reputation was later tarnished by her stance on the Rohingya crisis. Her influence spans from the late 20th century into the early 21st.
+                        </div>
+                    </div>
+                </div>
+                 <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">Aung San Suu Kyi's Influence (Ongoing)</p>
+                </div>
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">Late 20th C. Onward: Globalization</h3>
+                        <p class="text-sm text-gray-300">Increased global interconnectedness.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            The increasing interconnectedness and interdependence of countries and economies worldwide through the flow of goods, services, capital, technology, and information. Driven by advancements in transportation, communication technology (e.g., internet), and international agreements, it has led to economic growth and cultural exchange but also issues of labor exploitation and cultural homogenization. This trend has been accelerating since the late 20th century and is ongoing.
+                        </div>
+                    </div>
+                </div>
+                <!-- No end marker for Ongoing -->
+
+                <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">2003 Onward: Genocide in Darfur</h3>
+                        <p class="text-sm text-gray-300">Ongoing attacks on non-Arab groups in Sudan.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            An ongoing genocide in Darfur, Sudan, beginning in 2003, characterized by systematic attacks, killings, and displacement of non-Arab ethnic groups by government-backed Janjaweed militias. This conflict continues to affect the region and is ongoing.
+                        </div>
+                    </div>
+                </div>
+                <!-- No end marker for Ongoing -->
+
+                <div class="timeline-container left group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">Ongoing: Israeli-Palestinian Conflict</h3>
+                        <p class="text-sm text-gray-300">Dispute over land and self-determination.</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            An enduring and complex conflict over land and self-determination in the Middle East, rooted in historical claims, Zionist aspirations, and Palestinian nationalism. It involves multiple Arab-Israeli Wars (1948, 1956, 1967, 1973), subsequent intifadas (Palestinian uprisings), and ongoing disputes over territory (e.g., West Bank, Gaza Strip, East Jerusalem), settlements, and the right of return for refugees. Efforts for a two-state solution have faced continuous obstacles and the conflict remains ongoing since its intensification in the mid-20th century.
+                        </div>
+                    </div>
+                </div>
+                <!-- No end marker for Ongoing -->
+
+                 <div class="timeline-container right group">
+                    <div class="timeline-content">
+                        <span class="span-indicator-bar"></span>
+                        <h3 class="font-bold text-[#FBBF24]">20th C.: Actions of Mother Teresa</h3>
+                        <p class="text-sm text-gray-300">Service to the "poorest of the poor."</p>
+                        <div class="timeline-detail-content text-xs text-gray-400">
+                            A Catholic nun (Albanian-Indian) known for her humanitarian work among the poor and sick in Calcutta, India, founding the Missionaries of Charity to serve the "poorest of the poor," and receiving the Nobel Peace Prize. Her work spanned much of the 20th century, exemplifying humanitarian efforts.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-event-end left">
+                    <span class="timeline-end-point"></span>
+                    <p class="timeline-end-text">Mother Teresa's Main Work Concluded (c. 1997)</p>
+                </div>
             </div>
         </section>
 
